@@ -1,0 +1,71 @@
+run:
+  tests: false # include no test files
+  skip-dirs:
+    - json
+    - doc
+    - res
+    - submodule
+
+linters:
+  enable:
+    - depguard
+    - errcheck
+    - goconst
+    - gocritic
+    - gocyclo
+    - gofmt
+    - goimports
+    - gosimple
+    - ineffassign
+    - misspell
+    - nakedret
+    - prealloc
+    - staticcheck
+    - stylecheck
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - govet
+    - revive
+    - exportloopref
+    - lll
+  disable:
+    # Ignore suggestion from these linters
+    - dupl
+    - gochecknoglobals
+    - gochecknoinits
+    - gosec
+    - maligned
+
+linters-settings:
+  gocritic:
+    disabled-checks:
+      - ifElseChain
+  lll:
+    line-length: 80
+    tab-width: 4
+
+  depguard:
+    rules:
+      main:
+        # List of file globs that will match this list of settings to compare against.
+        # Default: $all
+        files:
+          - $all
+          - "!$test"
+        # Packages that are not allowed where the value is a suggestion.
+        deny:
+          - pkg: "reflect"
+            desc: Please don't use reflect package.
+          - pkg: "github.com/sirupsen/logrus"
+            desc: not allowed
+          - pkg: "io/ioutil"
+            desc: Should be replaced by standard lib errors package
+
+  govet:
+    check-shadowing: true
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
