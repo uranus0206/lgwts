@@ -10,13 +10,17 @@ func Sum(numbers []int) (sum int) {
 }
 
 // Calculate summarizes of any numbers array.
-func SumAll(numbersToSum ...[]int) (sums []int) {
-	lenOfNumbers := len(numbersToSum)
-	sums = make([]int, lenOfNumbers)
+func SumAllTails(numbersToSum ...[]int) []int {
+	sums := make([]int, 0)
 
-	for i, v := range numbersToSum {
-		sums[i] = Sum(v)
+	for _, v := range numbersToSum {
+		if len(v) == 0 {
+			sums = append(sums, 0)
+		} else {
+			tail := v[1:]
+			sums = append(sums, Sum(tail))
+		}
 	}
 
-	return
+	return sums
 }
