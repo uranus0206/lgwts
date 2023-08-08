@@ -25,6 +25,15 @@ func (c Circle) Aera() (aera float64) {
 	return math.Pi * c.Radius * c.Radius
 }
 
+type Triangle struct {
+	Base   float64
+	Height float64
+}
+
+func (t Triangle) Aera() (aera float64) {
+	return (t.Base * t.Height) / 2
+}
+
 func Perimeter(rect Rectangle) (peri float64) {
 	return 2 * (rect.Height + rect.Height)
 }

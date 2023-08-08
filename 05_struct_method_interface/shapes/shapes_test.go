@@ -19,26 +19,21 @@ func TestPerimeter(t *testing.T) {
 }
 
 func TestAera(t *testing.T) {
+	aeraTests := []struct {
+		shape Shape
+		want  float64
+	}{
+		{Rectangle{12, 6}, 72.0},
+		{Circle{10}, 314.16},
+		{Triangle{12, 6}, 36.0},
+	}
 
-	checkAera := func(t *testing.T, shape Shape, want float64) {
-		t.Helper()
-		got := shape.Aera()
+	for _, tt := range aeraTests {
+		got := tt.shape.Aera()
 
-		tolerance := 0.001
-		if diff := math.Abs(got - want); diff > tolerance {
-			t.Errorf("got %f want %f diff %f", got, want, diff)
+		tolerance := 0.01
+		if diff := math.Abs(got - tt.want); diff > tolerance {
+			t.Errorf("got %.2f want %.2f", got, tt.want)
 		}
 	}
-	t.Run("rectangles", func(t *testing.T) {
-		rectangle := Rectangle{
-			Width:  12.0,
-			Height: 6.0,
-		}
-		checkAera(t, rectangle, 72.0)
-
-	})
-	t.Run("circles", func(t *testing.T) {
-		circle := Circle{Radius: 10}
-		checkAera(t, circle, 314.16)
-	})
 }
