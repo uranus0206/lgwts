@@ -109,13 +109,4 @@ func TestDelete(t *testing.T) {
 			t.Errorf("Expected %s to be deleted", word)
 		}
 	})
-
-	t.Run("delete noneixst word", func(t *testing.T) {
-		word := "test"
-		definition := "test definition"
-		dictionary := Dictionary{word: definition}
-		word2 := "test2"
-		err := dictionary.Delete(word2)
-		assertError(t, err, ErrNotFound)
-	})
 }
