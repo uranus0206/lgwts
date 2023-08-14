@@ -20,15 +20,15 @@ import (
 // }
 
 func TestRacer(t *testing.T) {
+	slowServer := makeDelayServer(20 * time.Millisecond)
+	fastServer := makeDelayServer(0 * time.Millisecond)
+	defer slowServer.Close()
+	defer fastServer.Close()
+
+	slowUrl := slowServer.URL
+	fastUrl := fastServer.URL
+
 	t.Run("return fastest", func(t *testing.T) {
-		slowServer := makeDelayServer(20 * time.Millisecond)
-		fastServer := makeDelayServer(0 * time.Millisecond)
-		defer slowServer.Close()
-		defer fastServer.Close()
-
-		slowUrl := slowServer.URL
-		fastUrl := fastServer.URL
-
 		want := fastUrl
 		got, _ := WebSiteRacer(slowUrl, fastUrl)
 		if got != want {
@@ -39,15 +39,8 @@ func TestRacer(t *testing.T) {
 
 	t.Run("returns an error if a server doesn't respond within 10s",
 		func(t *testing.T) {
-			slowServer := makeDelayServer(11 * time.Second)
-			fastServer := makeDelayServer(12 * time.Second)
-			defer slowServer.Close()
-			defer fastServer.Close()
-
-			slowUrl := slowServer.URL
-			fastUrl := fastServer.URL
-
-			_, err := WebSiteRacer(slowUrl, fastUrl)
+			// _, err := WebSiteRacer(slowUrl, fastUrl)
+			_, err := ConfigurableRacer(slowUrl, fastUrl, 1)
 			if err == nil {
 				t.Error("expected an error but didn't get one.")
 			}
