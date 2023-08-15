@@ -1,10 +1,16 @@
 run:
-  tests: false # include no test files
+  # tests: false # include no test files
   skip-dirs:
     - json
     - doc
     - res
     - submodule
+
+output:
+  print-issued-lines: true
+  print-linter-name: true
+  unique-by-line: true
+  sort-results: true
 
 linters:
   enable:
@@ -65,6 +71,7 @@ linters-settings:
 
   govet:
     check-shadowing: true
+    enable-all: true
 
 issues:
   max-issues-per-linter: 0
