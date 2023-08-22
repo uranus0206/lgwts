@@ -19,9 +19,9 @@ func (s *StubStore) Fetch() string {
 }
 
 type SpyStore struct {
+	t         *testing.T
 	response  string
 	cancelled bool
-	t         *testing.T
 }
 
 func (s *SpyStore) Fetch() string {
