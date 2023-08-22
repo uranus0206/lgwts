@@ -65,6 +65,7 @@ func (s *SpyResponseWriter) Write([]byte) (int, error) {
 }
 
 func (s *SpyResponseWriter) WriteHeader(statusCode int) {
+	log.Println("Status: ", statusCode)
 	s.written = true
 }
 
